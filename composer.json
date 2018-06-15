@@ -1,0 +1,15 @@
+{
+    "name": "endeavors/components-routing",
+    "description": "Use Laravel Routing Component Independently",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "illuminate/routing": "^5.5",
+        "illuminate/events": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Endeavors\\Components\\Routing\\": "src/"
+        }
+    }
+}
