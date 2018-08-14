@@ -4,12 +4,20 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "illuminate/routing": "^5.5",
-        "illuminate/events": "^5.5"
+        "illuminate/routing": "^4.2",
+        "illuminate/events": "^4.2"
+    },
+    "require-dev": {
+		"orchestra/testbench": "2.2.x"
     },
     "autoload": {
         "psr-4": {
             "Endeavors\\Components\\Routing\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Endeavors\\Components\\Routing\\Tests\\": "tests/"
         }
     }
 }
