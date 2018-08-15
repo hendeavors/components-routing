@@ -1,6 +1,6 @@
 <?php
 
-namespace Endeavors\Components\Routing;
+namespace Endeavors\Components\Routing\Traits;
 
 use Closure;
 use ReflectionClass;
