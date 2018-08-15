@@ -19,6 +19,7 @@ class RoutingUrlGeneratorTest extends TestCase
 		$url = new UrlGenerator(
 			$this->app['url']->original()
 		);
+        
 
 		$this->assertEquals('http://www.foo.com/foo/bar', $url->to('foo/bar'));
 		$this->assertEquals('https://www.foo.com/foo/bar', $url->to('foo/bar', array(), true));
