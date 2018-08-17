@@ -3,6 +3,8 @@
 namespace Endeavors\Components\Routing;
 
 use Illuminate\Html\HtmlServiceProvider as OriginalHtmlServiceProvider;
+use Illuminate\Html\HtmlBuilder;
+use Illuminate\Html\FormBuilder;
 
 class HtmlServiceProvider extends OriginalHtmlServiceProvider
 {
@@ -15,7 +17,7 @@ class HtmlServiceProvider extends OriginalHtmlServiceProvider
 	{
 		$this->app->bindShared('html', function($app)
 		{
-			return new \Illuminate\Html\HtmlBuilder($app['url']->original());
+			return new HtmlBuilder($app['url']->original());
 		});
 	}
 
@@ -28,7 +30,7 @@ class HtmlServiceProvider extends OriginalHtmlServiceProvider
 	{
 		$this->app->bindShared('form', function($app)
 		{
-			$form = new \Illuminate\Html\FormBuilder($app['html'], $app['url']->original(), $app['session.store']->getToken());
+			$form = new FormBuilder($app['html'], $app['url']->original(), $app['session.store']->getToken());
 
 			return $form->setSessionStore($app['session.store']);
 		});

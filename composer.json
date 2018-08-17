@@ -9,7 +9,8 @@
     },
     "require-dev": {
 		"orchestra/testbench": "2.2.x",
-        "phpunit/phpunit": "~4"
+        "phpunit/phpunit": "~4",
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
         "psr-4": {
