@@ -5,7 +5,9 @@
     "license": "MIT",
     "require": {
         "illuminate/routing": "^4.2",
-        "illuminate/events": "^4.2"
+        "illuminate/events": "^4.2",
+        "nesbot/carbon": "~1.0",
+        "illuminate/html": "^4.2"
     },
     "require-dev": {
 		"orchestra/testbench": "2.2.x",

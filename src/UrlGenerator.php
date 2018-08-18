@@ -5,6 +5,7 @@ namespace Endeavors\Components\Routing;
 use Illuminate\Routing\UrlGenerator as OriginalUrlGenerator;
 use DateInterval;
 use DateTimeInterface;
+use Carbon\Carbon;
 
 /**
  * Decorate the UrlGenerator for simplicity
