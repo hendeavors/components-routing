@@ -74,7 +74,5 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
         Request::macro('hasValidSignature', function () {
             return URL::hasValidSignature($this);
         });
-
-        $this->app::requestClass(new Request);
     }
 }

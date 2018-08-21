@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Tests\Integration\Routing;
+namespace Endeavors\Components\Routing\Tests\Integration\Routing;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;

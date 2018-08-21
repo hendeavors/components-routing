@@ -6,8 +6,9 @@ use Orchestra\Testbench\TestCase as OriginalTestCase;
 use Illuminate\Config\EnvironmentVariables;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Http\Request;
+use Endeavors\Components\Routing\Request;
 use Illuminate\Support\Facades\Facade;
+use Endeavors\Components\Routing\Application;
 
 class TestCase extends OriginalTestCase
 {
@@ -119,7 +120,7 @@ class TestCase extends OriginalTestCase
      */
     public function createApplication()
     {
-        $app = new Application;
+        $app = Application::load();
 
         $app->detectEnvironment(array(
             'local' => array('your-machine-name'),
