@@ -183,10 +183,8 @@ class UrlGenerator extends OriginalUrlGenerator
     /**
      * @return bool
      */
-    public function hasValidSignature()
+    public function hasValidSignature(Request $request)
     {
-        $request = $this->getRequest();
-
         $original = rtrim($request->url().'?'.http_build_query(
             Arr::except($request->query(), 'signature')
         ), '?');

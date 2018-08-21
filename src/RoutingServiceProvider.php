@@ -5,6 +5,7 @@ namespace Endeavors\Components\Routing;
 use Illuminate\Routing\RoutingServiceProvider as OriginalRoutingServiceProvider;
 use Illuminate\Routing\UrlGenerator as OriginalUrlGenerator;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\URL;
 
 class RoutingServiceProvider extends OriginalRoutingServiceProvider
 {
@@ -71,7 +72,7 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
     public function registerRequestSignatureValidation()
     {
         Request::macro('hasValidSignature', function () {
-            return $this->app['url']->hasValidSignature($this);
+            return URL::hasValidSignature($this);
         });
 
         $this->app::requestClass(new Request);
