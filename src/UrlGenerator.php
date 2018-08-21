@@ -10,7 +10,7 @@ use Carbon\Carbon;
 /**
  * Decorate the UrlGenerator for simplicity
  */
-class UrlGenerator
+class UrlGenerator extends OriginalUrlGenerator
 {
     private $originalUrlGenerator;
 
@@ -244,11 +244,6 @@ class UrlGenerator
             }
         }
         return $parameters;
-    }
-
-    public function original()
-    {
-        return $this->originalUrlGenerator;
     }
 
     /**

@@ -36,6 +36,8 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
         // We don't have a FoundationServiceProvider
         // in earlier versions of Laravel
         $this->registerRequestSignatureValidation();
+
+        
     }
     
     /**
@@ -47,7 +49,7 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
     {
         $this->app['redirect'] = $this->app->share(function($app)
         {
-            $redirector = new Redirector($app['url']->original());
+            $redirector = new Redirector($app['url']);
 
             // If the session is set on the application instance, we'll inject it into
             // the redirector instance. This allows the redirect responses to allow
@@ -71,5 +73,7 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
         Request::macro('hasValidSignature', function () {
             return $this->app['url']->hasValidSignature($this);
         });
+
+        $this->app::requestClass(new Request);
     }
 }
