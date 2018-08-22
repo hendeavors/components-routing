@@ -8,7 +8,6 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
 use Endeavors\Components\Routing\Request;
 use Illuminate\Support\Facades\Facade;
-use Endeavors\Components\Routing\Application;
 
 class TestCase extends OriginalTestCase
 {
@@ -120,7 +119,9 @@ class TestCase extends OriginalTestCase
      */
     public function createApplication()
     {
-        $app = Application::load();
+        Application::requestClass(new Request);
+
+        $app = new Application;
 
         $app->detectEnvironment(array(
             'local' => array('your-machine-name'),

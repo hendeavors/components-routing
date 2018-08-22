@@ -255,7 +255,7 @@ class UrlGenerator extends OriginalUrlGenerator
         $delay = $this->parseDateInterval($delay);
         return $delay instanceof DateTimeInterface
                             ? $delay->getTimestamp()
-                            : \Carbon\DoctrineCarbon::now()->addSeconds($delay)->getTimestamp();
+                            : Carbon::now()->addSeconds($delay)->getTimestamp();
     }
 
     /**
@@ -267,7 +267,7 @@ class UrlGenerator extends OriginalUrlGenerator
     protected function parseDateInterval($delay)
     {
         if ($delay instanceof DateInterval) {
-            $delay = \Carbon\Carbon::now()->add($delay);
+            $delay = Carbon::now()->add($delay);
         }
         return $delay;
     }
