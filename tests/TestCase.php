@@ -6,7 +6,7 @@ use Orchestra\Testbench\TestCase as OriginalTestCase;
 use Illuminate\Config\EnvironmentVariables;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Http\Request;
+use Endeavors\Components\Routing\Request;
 use Illuminate\Support\Facades\Facade;
 
 class TestCase extends OriginalTestCase
@@ -119,6 +119,8 @@ class TestCase extends OriginalTestCase
      */
     public function createApplication()
     {
+        Application::requestClass(new Request);
+
         $app = new Application;
 
         $app->detectEnvironment(array(

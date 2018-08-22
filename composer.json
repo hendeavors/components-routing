@@ -5,13 +5,20 @@
     "license": "MIT",
     "require": {
         "illuminate/routing": "^4.2",
-        "illuminate/events": "^4.2"
+        "illuminate/events": "^4.2",
+        "nesbot/carbon": "~1.0",
+        "illuminate/html": "^4.2",
+        "endeavors/support-vo": "^2.0"
     },
     "require-dev": {
 		"orchestra/testbench": "2.2.x",
-        "phpunit/phpunit": "~4"
+        "phpunit/phpunit": "~4",
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "Endeavors\\Components\\Routing\\": "src/"
         }

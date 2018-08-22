@@ -1,11 +1,13 @@
 <?php
 
-namespace Endeavors\Components\Routing\Tests;
+namespace Endeavors\Components\Routing\Tests\Routing;
 
 use Endeavors\Components\Routing\UrlGenerator;
 use Illuminate\Routing\RouteCollection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Endeavors\Components\Routing\Tests\TestCase;
+use Illuminate\Routing\UrlGenerator as OriginalUrlGenerator;
 
 class RoutingUrlGeneratorTest extends TestCase
 {
@@ -16,9 +18,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testBasicGeneration()
 	{
-		$url = new UrlGenerator(
-			$this->app['url']->original()
-		);
+		$url = new UrlGenerator(new OriginalUrlGenerator(
+			$routes = new RouteCollection,
+			$request = Request::create('http://www.foo.com/')
+		));
         
 
 		$this->assertEquals('http://www.foo.com/foo/bar', $url->to('foo/bar'));
@@ -28,30 +31,31 @@ class RoutingUrlGeneratorTest extends TestCase
 		/**
 		 * Test HTTPS request URL generation...
 		 */
-		$url = new UrlGenerator(
-			$this->app['url']->original()
-		);
+		$url = new UrlGenerator(new OriginalUrlGenerator(
+			$routes = new RouteCollection,
+			$request = Request::create('https://www.foo.com/')
+		));
 
 		$this->assertEquals('https://www.foo.com/foo/bar', $url->to('foo/bar'));
 
 		/**
 		 * Test asset URL generation...
 		 */
-		$url = new UrlGenerator(
-			$this->app['url']->original()
-		);
+		$url = new UrlGenerator(new OriginalUrlGenerator(
+			$routes = new RouteCollection,
+			$request = Request::create('http://www.foo.com/index.php/')
+		));
 
 		$this->assertEquals('http://www.foo.com/foo/bar', $url->asset('foo/bar'));
 		$this->assertEquals('https://www.foo.com/foo/bar', $url->asset('foo/bar', true));
-	}
-
+    }
 
 	public function testBasicRouteGeneration()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('http://www.foo.com/')
-		);
+		));
 
 		/**
 		 * Empty Named Route
@@ -108,10 +112,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testRoutesMaintainRequestScheme()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
-			$request = equest::create('https://www.foo.com/')
-		);
+			$request = Request::create('https://www.foo.com/')
+		));
 
 		/**
 		 * Named Routes
@@ -125,10 +129,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testHttpOnlyRoutes()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('https://www.foo.com/')
-		);
+		));
 
 		/**
 		 * Named Routes
@@ -142,10 +146,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testRoutesWithDomains()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('http://www.foo.com/')
-		);
+		));
 
 		$route = new Route(array('GET'), 'foo/bar', array('as' => 'foo', 'domain' => 'sub.foo.com'));
 		$routes->add($route);
@@ -164,10 +168,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testRoutesWithDomainsAndPorts()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('http://www.foo.com:8080/')
-		);
+		));
 
 		$route = new Route(array('GET'), 'foo/bar', array('as' => 'foo', 'domain' => 'sub.foo.com'));
 		$routes->add($route);
@@ -185,10 +189,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testHttpsRoutesWithDomains()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('https://foo.com/')
-		);
+		));
 
 		/**
 		 * When on HTTPS, no need to specify 443
@@ -202,10 +206,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testUrlGenerationForControllers()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('http://www.foo.com:8080/')
-		);
+		));
 
 		$route = new Route(array('GET'), 'foo/{one}/{two?}/{three?}', array('as' => 'foo', function() {}));
 		$routes->add($route);
@@ -216,10 +220,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testForceRootUrl()
 	{
-		$url = new UrlGenerator(
-			$routes = new Illuminate\Routing\RouteCollection,
-			$request = Illuminate\Http\Request::create('http://www.foo.com/')
-		);
+		$url = new UrlGenerator(new OriginalUrlGenerator(
+			$routes = new RouteCollection,
+			$request = Request::create('http://www.foo.com/')
+		));
 
 		$url->forceRootUrl('https://www.bar.com');
 		$this->assertEquals('http://www.bar.com/foo/bar', $url->to('foo/bar'));
@@ -228,13 +232,13 @@ class RoutingUrlGeneratorTest extends TestCase
 		/**
 		 * Route Based...
 		 */
-		$url = new UrlGenerator(
-			$routes = new Illuminate\Routing\RouteCollection,
-			$request = Illuminate\Http\Request::create('http://www.foo.com/')
-		);
+		$url = new UrlGenerator(new OriginalUrlGenerator(
+			$routes = new RouteCollection,
+			$request = Request::create('http://www.foo.com/')
+		));
 
 		$url->forceSchema('https');
-		$route = new Illuminate\Routing\Route(array('GET'), '/foo', array('as' => 'plain'));
+		$route = new Route(array('GET'), '/foo', array('as' => 'plain'));
 		$routes->add($route);
 
 		$this->assertEquals('https://www.foo.com/foo', $url->route('plain'));
@@ -246,10 +250,10 @@ class RoutingUrlGeneratorTest extends TestCase
 
 	public function testPrevious()
 	{
-		$url = new UrlGenerator(
+		$url = new UrlGenerator(new OriginalUrlGenerator(
 			$routes = new RouteCollection,
 			$request = Request::create('http://www.foo.com/')
-		);
+		));
 
 		$url->getRequest()->headers->set('referer', 'http://www.bar.com/');
 		$this->assertEquals('http://www.bar.com/', $url->previous());

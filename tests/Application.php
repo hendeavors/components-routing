@@ -8,12 +8,12 @@ use Endeavors\Components\Routing\RoutingServiceProvider;
 class Application extends OriginalApplication
 {
     /**
-	 * Register the routing service provider.
-	 *
-	 * @return void
-	 */
-	protected function registerRoutingProvider()
-	{
-		$this->register(new RoutingServiceProvider($this));
-	}
+     * Register the routing service provider.
+     *
+     * @return void
+     */
+    protected function registerRoutingProvider()
+    {
+        $this->register(new RoutingServiceProvider($this));
+    }
 }

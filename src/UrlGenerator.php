@@ -5,11 +5,12 @@ namespace Endeavors\Components\Routing;
 use Illuminate\Routing\UrlGenerator as OriginalUrlGenerator;
 use DateInterval;
 use DateTimeInterface;
+use Carbon\Carbon;
 
 /**
  * Decorate the UrlGenerator for simplicity
  */
-class UrlGenerator
+class UrlGenerator extends OriginalUrlGenerator
 {
     private $originalUrlGenerator;
 
@@ -182,10 +183,8 @@ class UrlGenerator
     /**
      * @return bool
      */
-    public function hasValidSignature()
+    public function hasValidSignature(Request $request)
     {
-        $request = $this->getRequest();
-
         $original = rtrim($request->url().'?'.http_build_query(
             Arr::except($request->query(), 'signature')
         ), '?');
@@ -245,11 +244,6 @@ class UrlGenerator
         return $parameters;
     }
 
-    public function original()
-    {
-        return $this->originalUrlGenerator;
-    }
-
     /**
      * Get the "available at" UNIX timestamp.
      *
@@ -261,7 +255,7 @@ class UrlGenerator
         $delay = $this->parseDateInterval($delay);
         return $delay instanceof DateTimeInterface
                             ? $delay->getTimestamp()
-                            : \Carbon\DoctrineCarbon::now()->addSeconds($delay)->getTimestamp();
+                            : Carbon::now()->addSeconds($delay)->getTimestamp();
     }
 
     /**
@@ -273,7 +267,7 @@ class UrlGenerator
     protected function parseDateInterval($delay)
     {
         if ($delay instanceof DateInterval) {
-            $delay = \Carbon\Carbon::now()->add($delay);
+            $delay = Carbon::now()->add($delay);
         }
         return $delay;
     }
