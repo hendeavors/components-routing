@@ -87,9 +87,4 @@ class HelperSignatureTest extends TestCase
 
         $this->assertEquals('invalid', $this->get($url)->original);
     }
-
-    protected function get($url)
-    {
-        return $this->call('GET', $url);
-    }
 }

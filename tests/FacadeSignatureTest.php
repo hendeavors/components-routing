@@ -45,9 +45,4 @@ class FacadeSignatureTest extends TestCase
 
         $this->assertEquals('valid', $this->get($url)->original);
     }
-
-    protected function get($url)
-    {
-        return $this->call('GET', $url);
-    }
 }

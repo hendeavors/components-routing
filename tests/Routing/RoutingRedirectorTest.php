@@ -19,7 +19,7 @@ class RoutingRedirectorTest extends PHPUnit_Framework_TestCase {
 		$this->request = m::mock('Illuminate\Http\Request');
 		$this->request->headers = $this->headers;
 
-		$this->url = m::mock('Endeavors\Components\Routing\UrlGenerator');
+		$this->url = m::mock('Illuminate\Routing\UrlGenerator');
 		$this->url->shouldReceive('getRequest')->andReturn($this->request);
 		$this->url->shouldReceive('to')->with('bar', array(), null)->andReturn('http://foo.com/bar');
 		$this->url->shouldReceive('to')->with('bar', array(), true)->andReturn('https://foo.com/bar');
@@ -29,7 +29,9 @@ class RoutingRedirectorTest extends PHPUnit_Framework_TestCase {
 
         $this->session = m::mock('Illuminate\Session\Store');
 
-		$this->redirect = new Redirector($this->url);
+        $realUrlGenerator = new UrlGenerator($this->url);
+
+		$this->redirect = new Redirector($realUrlGenerator->getOriginalUrlGenerator());
 		$this->redirect->setSession($this->session);
 	}
 

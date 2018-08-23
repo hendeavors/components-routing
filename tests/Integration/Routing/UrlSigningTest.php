@@ -59,9 +59,4 @@ class UrlSigningTest extends TestCase
 
         $this->assertEquals('invalid', $this->get('/foo/1')->original);
     }
-
-    protected function get($url)
-    {
-        return $this->call('GET', $url);
-    }
 }
