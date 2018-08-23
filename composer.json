@@ -6,7 +6,7 @@
     "require": {
         "illuminate/routing": "~5.2",
         "illuminate/events": "~5.2",
-        "nesbot/carbon": "~1.0",
+        "nesbot/carbon": "~1.20",
         "endeavors/support-vo": "^2.0"
     },
     "require-dev": {

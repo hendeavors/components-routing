@@ -22,9 +22,7 @@ class UrlSigningTest extends TestCase
 
     public function test_signing_url()
     {
-        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
+        Route::get('/foo/{id}', ['as' => 'foo', function (Request $request, $id) {
             return $request->hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
@@ -35,9 +33,7 @@ class UrlSigningTest extends TestCase
 
     public function test_temporary_signed_urls()
     {
-        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
+        Route::get('/foo/{id}', ['as' => 'foo', function (Request $request, $id) {
             return $request->hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
@@ -51,9 +47,7 @@ class UrlSigningTest extends TestCase
 
     public function test_signed_url_with_url_without_signature_parameter()
     {
-        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
+        Route::get('/foo/{id}', ['as' => 'foo', function (Request $request, $id) {
             return $request->hasValidSignature() ? 'valid' : 'invalid';
         }]);
 

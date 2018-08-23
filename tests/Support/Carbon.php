@@ -4,12 +4,10 @@ namespace Endeavors\Components\Routing\Tests\Support;
 
 use JsonSerializable;
 use Carbon\Carbon as BaseCarbon;
-use Endeavors\Components\Routing\Traits\Macroable;
+use Illuminate\Support\Traits\Macroable;
 
 class Carbon extends BaseCarbon implements JsonSerializable
 {
-    use Macroable;
-
     /**
      * The custom Carbon JSON serializer.
      *

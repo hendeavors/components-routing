@@ -2,19 +2,20 @@
 
 namespace Endeavors\Components\Routing;
 
-use Illuminate\Routing\UrlGenerator as OriginalUrlGenerator;
+use Illuminate\Contracts\Routing\UrlGenerator as UrlGeneratorContract;
 use DateInterval;
 use DateTimeInterface;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 /**
  * Decorate the UrlGenerator for simplicity
  */
-class UrlGenerator
+class UrlGenerator implements UrlGeneratorContract
 {
     private $originalUrlGenerator;
 
-    public function __construct(OriginalUrlGenerator $originalUrlGenerator)
+    public function __construct(UrlGeneratorContract $originalUrlGenerator)
     {
         $this->originalUrlGenerator = $originalUrlGenerator;
     }
@@ -44,9 +45,9 @@ class UrlGenerator
 	 *
 	 * @return string
 	 */
-	public function previous()
+	public function previous($fallback = false)
 	{
-		return $this->originalUrlGenerator->previous();
+		return $this->originalUrlGenerator->previous($fallback);
 	}
 
 	/**
@@ -175,9 +176,19 @@ class UrlGenerator
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return void
 	 */
-	public function setRequest(\Illuminate\Http\Request $request)
+	public function setRequest(Request $request)
 	{
 		$this->originalUrlGenerator->setRequest($request);
+    }
+
+    public function setSessionResolver(callable $sessionResolver)
+    {
+        return $this->originalUrlGenerator->setSessionResolver($sessionResolver);
+    }
+
+    public function setRootControllerNamespace($rootNamespace)
+    {
+        return $this->originalUrlGenerator->setRootControllerNamespace($rootNamespace);
     }
 
     public function getOriginalUrlGenerator()

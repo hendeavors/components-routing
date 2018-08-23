@@ -15,7 +15,7 @@ class TestCase extends OriginalTestCase
     {
         parent::setUp();
     }
-    
+
     /**
      * Creates the application.
      *
@@ -41,6 +41,20 @@ class TestCase extends OriginalTestCase
         $app['router']->getRoutes()->refreshNameLookups();
         return $app;
     }
+
+    /**
+     * Visit the given URI with a GET request.
+     *
+     * @param  string  $uri
+     * @param  array  $headers
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    public function get($uri, array $headers = [])
+    {
+        $server = $this->transformHeadersToServerVars($headers);
+        return $this->call('GET', $uri, [], [], [], $server);
+    }
+    
     /**
      * Resolve application implementation.
      *

@@ -4,10 +4,11 @@ namespace Endeavors\Components\Routing;
 
 use ArrayAccess;
 use InvalidArgumentException;
+use Illuminate\Support\Traits\Macroable;
 
 class Arr
 {
-    use Traits\Macroable;
+    use Macroable;
 
     /**
      * Determine whether the given value is array accessible.
