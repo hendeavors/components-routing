@@ -40,7 +40,6 @@ if(! function_exists('one_week_route') ) {
      * Create a temporary signed route URL for a named route.
      *
      * @param  string  $name
-     * @param  \DateTimeInterface|int  $expiration
      * @param  array  $parameters
      * @param  bool  $absolute
      * @return string
@@ -58,7 +57,6 @@ if(! function_exists('one_day_route') ) {
      * Create a temporary signed route URL for a named route.
      *
      * @param  string  $name
-     * @param  \DateTimeInterface|int  $expiration
      * @param  array  $parameters
      * @param  bool  $absolute
      * @return string
@@ -68,5 +66,20 @@ if(! function_exists('one_day_route') ) {
         $time = Day::create(1);
 
         return app('url')->temporarySignedRoute($name, $time->toSeconds(), $parameters);
+    }
+}
+
+if(! function_exists('five_minute_route') ) {
+    /**
+     * Create a temporary signed route URL for a named route.
+     *
+     * @param  string  $name
+     * @param  array  $parameters
+     * @param  bool  $absolute
+     * @return string
+     */
+    function five_minute_route($name, $parameters = [])
+    {
+        return app('url')->temporarySignedRoute($name, 500, $parameters);
     }
 }

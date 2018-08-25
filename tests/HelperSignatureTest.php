@@ -88,6 +88,27 @@ class HelperSignatureTest extends TestCase
         $this->assertEquals('invalid', $this->get($url)->original);
     }
 
+    public function test_signing_url_five_minutes()
+    {
+        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
+            $request = app('request');
+
+            return Request::hasValidSignature() ? 'valid' : 'invalid';
+        }]);
+
+        $this->assertTrue(is_string($url = five_minute_route('foo', ['id' => 1])));
+
+        $this->assertEquals('valid', $this->get($url)->original);
+
+        Carbon::setTestNow(Carbon::now()->addMinutes(5));
+
+        $this->assertEquals('valid', $this->get($url)->original);
+
+        Carbon::setTestNow(Carbon::now()->addMinutes(5)->addSecond());
+
+        $this->assertEquals('invalid', $this->get($url)->original);
+    }
+
     protected function get($url)
     {
         return $this->call('GET', $url);
