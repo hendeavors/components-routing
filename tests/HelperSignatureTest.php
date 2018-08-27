@@ -67,6 +67,40 @@ class HelperSignatureTest extends TestCase
         $this->assertEquals('invalid', $this->get($url)->original);
     }
 
+    public function test_signing_url_seven_days()
+    {
+        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
+            $request = app('request');
+
+            return Request::hasValidSignature() ? 'valid' : 'invalid';
+        }]);
+
+        $this->assertTrue(is_string($url = seven_days_route('foo', ['id' => 1])));
+
+        $this->assertEquals('valid', $this->get($url)->original);
+
+        Carbon::setTestNow(Carbon::now()->addDays(7));
+
+        $this->assertEquals('valid', $this->get($url)->original);
+
+        Carbon::setTestNow(Carbon::now()->addDays(7)->addSecond());
+
+        $this->assertEquals('invalid', $this->get($url)->original);
+    }
+
+    public function test_signing_url_seven_days_is_one_week()
+    {
+        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
+            $request = app('request');
+
+            return Request::hasValidSignature() ? 'valid' : 'invalid';
+        }]);
+
+        $this->assertTrue(is_string($url = seven_days_route('foo', ['id' => 1])));
+
+        $this->assertEquals(seven_days_route('foo', ['id' => 1]), one_week_route('foo', ['id' => 1]));
+    }
+
     public function test_signing_url_one_day()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {

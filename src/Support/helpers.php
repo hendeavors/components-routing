@@ -52,6 +52,21 @@ if(! function_exists('one_week_route') ) {
     }
 }
 
+if(! function_exists('seven_days_route') ) {
+    /**
+     * Create a temporary signed route URL for a named route.
+     *
+     * @see one_week_route
+     * @param  array  $parameters
+     * @param  bool  $absolute
+     * @return string
+     */
+    function seven_days_route($name, $parameters = [])
+    {
+        return one_week_route($name, $parameters);
+    }
+}
+
 if(! function_exists('one_day_route') ) {
     /**
      * Create a temporary signed route URL for a named route.
