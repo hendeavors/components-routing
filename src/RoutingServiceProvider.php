@@ -91,5 +91,9 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
         Request::macro('hasValidParameterSignature', function (array $parameters = []) {
             return URL::hasValidParameterSignature($this, $parameters);
         });
+
+        Request::macro('hasInvalidParameterSignature', function (array $parameters = []) {
+            return ! URL::hasValidParameterSignature($this, $parameters);
+        });
     }
 }

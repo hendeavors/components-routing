@@ -77,5 +77,15 @@ class FacadeSignatureTest extends TestCase
         $this->assertTrue(is_string($url = URL::signedRoute('foo', ['id' => 1, 'username' => 'bob'])));
 
         $this->assertEquals('valid', $this->get($url)->original);
+
+        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
+            $request = app('request');
+
+            return Input::hasInvalidParameterSignature(['username']) ? 'invalid' : 'valid';
+        }]);
+
+        $this->assertTrue(is_string($url = URL::signedRoute('foo', ['id' => 1, 'username' => 'bob'])));
+
+        $this->assertEquals('valid', $this->get($url)->original);
     }
 }
