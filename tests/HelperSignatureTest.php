@@ -31,6 +31,16 @@ class HelperSignatureTest extends TestCase
         $this->assertTrue(is_string($url = signed_route('foo', ['id' => 1])));
 
         $this->assertEquals('valid', $this->get($url)->original);
+
+        Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
+            $request = app('request');
+
+            return Request::hasInvalidSignature() ? 'invalid' : 'valid';
+        }]);
+
+        $this->assertTrue(is_string($url = signed_route('foo', ['id' => 1])));
+
+        $this->assertEquals('valid', $this->get($url)->original);
     }
 
     public function test_signing_url_using_input_facade()

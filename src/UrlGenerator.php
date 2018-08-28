@@ -209,6 +209,31 @@ class UrlGenerator implements UrlGeneratorContract
         $signature = hash_hmac('sha256', $original, call_user_func($this->keyResolver));
         return  hash_equals($signature, $request->query('signature', '')) && ! ($expires && Carbon::now()->getTimestamp() > $expires);
     }
+    
+    /**
+     * Only check validity of signature if specified parameters exist
+     */
+    public function hasValidParameterSignature(Request $request, array $parameters = [])
+    {
+        // we'll bail here as we need at least one
+        if(count($parameters) === 0) return true;
+
+        foreach($parameters as $parameter) {
+            // if the request has the parameter or
+            // the route has the parameter we check the signature
+            if($request->has($parameter) || strlen($request->route($parameter)) > 0) return $this->hasValidSignature($request);
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasInvalidSignature(Request $request)
+    {
+        return ! $this->hasValidSignature($request);
+    }
 
     /**
      * Create a signed route URL for a named route.
