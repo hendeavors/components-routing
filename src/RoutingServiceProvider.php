@@ -42,12 +42,7 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
                 $app['url']->setRoutes($routes);
             });
             return $url;
-        });
-        // We don't have a FoundationServiceProvider
-        // in earlier versions of Laravel
-        $this->registerRequestSignatureValidation();
-
-        
+        });        
     }
     
     /**
@@ -70,30 +65,6 @@ class RoutingServiceProvider extends OriginalRoutingServiceProvider
             }
 
             return $redirector;
-        });
-    }
-
-    /**
-     * Register the "hasValidSignature" macro on the request.
-     *
-     * @return void
-     */
-    public function registerRequestSignatureValidation()
-    {
-        Request::macro('hasValidSignature', function () {
-            return URL::hasValidSignature($this);
-        });
-
-        Request::macro('hasInvalidSignature', function () {
-            return URL::hasInvalidSignature($this);
-        });
-
-        Request::macro('hasValidParameterSignature', function (array $parameters = []) {
-            return URL::hasValidParameterSignature($this, $parameters);
-        });
-
-        Request::macro('hasInvalidParameterSignature', function (array $parameters = []) {
-            return ! URL::hasValidParameterSignature($this, $parameters);
         });
     }
 }

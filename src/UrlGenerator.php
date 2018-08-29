@@ -27,7 +27,7 @@ class UrlGenerator implements UrlGeneratorContract
 	 */
 	public function full()
 	{
-		return $this->originalUrlGenerator->fullUrl();
+		return $this->originalUrlGenerator->full();
 	}
 
 	/**

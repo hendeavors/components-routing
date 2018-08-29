@@ -2,6 +2,8 @@
 
 namespace Endeavors\Components\Routing\Tests;
 
+use Endeavors\Components\Routing\RoutingServiceProvider;
+use Endeavors\Components\Routing\FoundationServiceProvider;
 use Orchestra\Testbench\TestCase as OriginalTestCase;
 use Illuminate\Config\EnvironmentVariables;
 use Illuminate\Config\Repository as Config;
@@ -17,29 +19,18 @@ class TestCase extends OriginalTestCase
     }
 
     /**
-     * Creates the application.
+     * Get package providers.
      *
-     * Needs to be implemented by subclasses.
+     * @param  \Illuminate\Foundation\Application  $app
      *
-     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     * @return array
      */
-    public function createApplication()
+    protected function getPackageProviders($app)
     {
-        $app = $this->resolveApplication();
-        $this->resolveApplicationExceptionHandler($app);
-        $this->resolveApplicationCore($app);
-        $this->resolveApplicationConfiguration($app);
-        $this->resolveApplicationHttpKernel($app);
-        $this->resolveApplicationConsoleKernel($app);
-        $app->make('Illuminate\Foundation\Bootstrap\ConfigureLogging')->bootstrap($app);
-        $app->make('Illuminate\Foundation\Bootstrap\HandleExceptions')->bootstrap($app);
-        $app->make('Illuminate\Foundation\Bootstrap\RegisterFacades')->bootstrap($app);
-        $app->make('Illuminate\Foundation\Bootstrap\SetRequestForConsole')->bootstrap($app);
-        $app->make('Illuminate\Foundation\Bootstrap\RegisterProviders')->bootstrap($app);
-        $this->getEnvironmentSetUp($app);
-        $app->make('Illuminate\Foundation\Bootstrap\BootProviders')->bootstrap($app);
-        $app['router']->getRoutes()->refreshNameLookups();
-        return $app;
+        return [
+            RoutingServiceProvider::class,
+            FoundationServiceProvider::class
+        ];
     }
 
     /**
@@ -53,17 +44,5 @@ class TestCase extends OriginalTestCase
     {
         $server = $this->transformHeadersToServerVars($headers);
         return $this->call('GET', $uri, [], [], [], $server);
-    }
-    
-    /**
-     * Resolve application implementation.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
-    protected function resolveApplication()
-    {
-        $app = new Application($this->getBasePath());
-        $app->bind('Illuminate\Foundation\Bootstrap\LoadConfiguration', 'Orchestra\Testbench\Bootstrap\LoadConfiguration');
-        return $app;
     }
 }
