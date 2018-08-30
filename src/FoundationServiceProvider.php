@@ -81,25 +81,25 @@ class FoundationServiceProvider extends OriginalFoundationServiceProvider
 
     /**
      * Register the signature macros on the request.
-     *
+     * @todo is URL::getRequest the same as $this
      * @return void
      */
     public function registerRequestSignatureValidation()
     {
         FormRequest::macro('hasValidSignature', function () {
-            return URL::hasValidSignature($this);
+            return URL::hasValidSignature($this ?? URL::getRequest());
         });
 
         FormRequest::macro('hasInvalidSignature', function () {
-            return URL::hasInvalidSignature($this);
+            return ! URL::hasValidSignature($this ?? URL::getRequest());
         });
 
         FormRequest::macro('hasValidParameterSignature', function (array $parameters = []) {
-            return URL::hasValidParameterSignature($this, $parameters);
+            return URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
         });
 
         FormRequest::macro('hasInvalidParameterSignature', function (array $parameters = []) {
-            return ! URL::hasValidParameterSignature($this, $parameters);
+            return ! URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
         });
     }
 
