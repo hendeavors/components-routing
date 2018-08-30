@@ -7,11 +7,12 @@ use DateInterval;
 use DateTimeInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteCollection;
 
 /**
  * Decorate the UrlGenerator for simplicity
  */
-class UrlGenerator implements UrlGeneratorContract
+class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
 {
     private $originalUrlGenerator;
 
@@ -179,6 +180,11 @@ class UrlGenerator implements UrlGeneratorContract
 	public function setRequest(Request $request)
 	{
 		$this->originalUrlGenerator->setRequest($request);
+    }
+
+    public function setRoutes(RouteCollection $routes)
+    {
+        return $this->setRoutes($routes);
     }
 
     public function setSessionResolver(callable $sessionResolver)
