@@ -184,7 +184,7 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
 
     public function setRoutes(RouteCollection $routes)
     {
-        return $this->setRoutes($routes);
+        return $this->originalUrlGenerator->setRoutes($routes);
     }
 
     public function setSessionResolver(callable $sessionResolver)
