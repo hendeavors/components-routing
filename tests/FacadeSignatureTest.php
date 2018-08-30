@@ -61,8 +61,6 @@ class FacadeSignatureTest extends TestCase
     public function test_signing_url_specified_parameters_using_input_facade()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Input::hasValidParameterSignature(['username']) ? 'valid' : 'invalid';
         }]);
 
@@ -71,8 +69,6 @@ class FacadeSignatureTest extends TestCase
         $this->assertEquals('valid', $this->get($url)->original);
 
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Input::hasInvalidParameterSignature(['username']) ? 'invalid' : 'valid';
         }]);
 

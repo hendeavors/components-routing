@@ -23,8 +23,6 @@ class HelperSignatureTest extends TestCase
     public function test_signing_url()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Request::hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
@@ -33,8 +31,6 @@ class HelperSignatureTest extends TestCase
         $this->assertEquals('valid', $this->get($url)->original);
 
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Request::hasInvalidSignature() ? 'invalid' : 'valid';
         }]);
 
@@ -46,8 +42,6 @@ class HelperSignatureTest extends TestCase
     public function test_signing_url_using_input_facade()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Input::hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
@@ -59,8 +53,6 @@ class HelperSignatureTest extends TestCase
     public function test_signing_url_one_week()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Request::hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
@@ -80,8 +72,6 @@ class HelperSignatureTest extends TestCase
     public function test_signing_url_one_day()
     {
         Route::get('/foo/{id}', ['as' => 'foo', function ($id) {
-            $request = app('request');
-
             return Request::hasValidSignature() ? 'valid' : 'invalid';
         }]);
 
