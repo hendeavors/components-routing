@@ -4,12 +4,27 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "illuminate/routing": "^5.5",
-        "illuminate/events": "^5.5"
+        "illuminate/routing": "~5.2",
+        "illuminate/events": "~5.2",
+        "nesbot/carbon": "~1.20",
+        "endeavors/support-vo": "^2.0"
+    },
+    "require-dev": {
+		"orchestra/testbench": "3.2.x",
+        "phpunit/phpunit": "~5",
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "Endeavors\\Components\\Routing\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Endeavors\\Components\\Routing\\Tests\\": "tests/"
         }
     }
 }
