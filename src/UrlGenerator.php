@@ -239,7 +239,7 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
                 return $this->hasValidSignature($request);
             }
 
-            if (is_string($route) && strlen($request->route($parameter)) > 0) {
+            if (is_string($route) && strlen($route) > 0) {
                 return $this->hasValidSignature($request);
             }
         }
