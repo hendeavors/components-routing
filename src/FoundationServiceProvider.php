@@ -40,7 +40,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function configureFormRequests()
     {
-        $this->app->afterResolving(function (ValidatesWhenResolved $resolved) {
+        $this->app->afterResolving(function(ValidatesWhenResolved $resolved) {
             $resolved->validate();
         });
 
@@ -85,19 +85,19 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function registerRequestSignatureValidation()
     {
-        FormRequest::macro('hasValidSignature', function () {
+        FormRequest::macro('hasValidSignature', function() {
             return URL::hasValidSignature($this ?? URL::getRequest());
         });
 
-        FormRequest::macro('hasInvalidSignature', function () {
+        FormRequest::macro('hasInvalidSignature', function() {
             return ! URL::hasValidSignature($this ?? URL::getRequest());
         });
 
-        FormRequest::macro('hasValidParameterSignature', function (array $parameters = []) {
+        FormRequest::macro('hasValidParameterSignature', function(array $parameters = []) {
             return URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
         });
 
-        FormRequest::macro('hasInvalidParameterSignature', function (array $parameters = []) {
+        FormRequest::macro('hasInvalidParameterSignature', function(array $parameters = []) {
             return ! URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
         });
     }
@@ -109,7 +109,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function registerRequestValidation()
     {
-        FormRequest::macro('validate', function (array $rules, ...$params) {
+        FormRequest::macro('validate', function(array $rules, ...$params) {
             return validator()->validate($this->all(), $rules, ...$params);
         });
     }

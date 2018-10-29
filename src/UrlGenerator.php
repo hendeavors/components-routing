@@ -213,7 +213,7 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
 
         $expires = Arr::get($request->query(), 'expires');
         $signature = hash_hmac('sha256', $original, call_user_func($this->keyResolver));
-        return  hash_equals($signature, $request->query('signature', '')) && ! ($expires && Carbon::now()->getTimestamp() > $expires);
+        return  hash_equals($signature, $request->query('signature', '')) && !($expires && Carbon::now()->getTimestamp() > $expires);
     }
     
     /**
@@ -222,12 +222,16 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
     public function hasValidParameterSignature(Request $request, array $parameters = [])
     {
         // we'll bail here as we need at least one
-        if(count($parameters) === 0) return true;
+        if (count($parameters) === 0) {
+            return true;
+        } 
 
         foreach($parameters as $parameter) {
             // if the request has the parameter or
             // the route has the parameter we check the signature
-            if($request->has($parameter) || strlen($request->route($parameter)) > 0) return $this->hasValidSignature($request);
+            if($request->has($parameter) || strlen($request->route($parameter)) > 0) { 
+                return $this->hasValidSignature($request); 
+            }
         }
 
         return true;
