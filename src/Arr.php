@@ -5,6 +5,7 @@ namespace Endeavors\Components\Routing;
 use ArrayAccess;
 use InvalidArgumentException;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Collection;
 
 class Arr
 {
