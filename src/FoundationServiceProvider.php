@@ -44,7 +44,7 @@ class FoundationServiceProvider extends ServiceProvider
             $resolved->validate();
         });
 
-        $this->app->resolving(function (FormRequest $request, $app) {
+        $this->app->resolving(function(FormRequest $request, $app) {
             $this->initializeRequest($request, $app['request']);
 
             $request->setContainer($app)->setRedirector($app->make(Redirector::class));
