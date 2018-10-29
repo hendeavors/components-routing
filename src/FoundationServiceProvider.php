@@ -90,7 +90,7 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         FormRequest::macro('hasInvalidSignature', function() {
-            return ! URL::hasValidSignature($this ?? URL::getRequest());
+            return !URL::hasValidSignature($this ?? URL::getRequest());
         });
 
         FormRequest::macro('hasValidParameterSignature', function(array $parameters = []) {
@@ -98,7 +98,7 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         FormRequest::macro('hasInvalidParameterSignature', function(array $parameters = []) {
-            return ! URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
+            return !URL::hasValidParameterSignature($this ?? URL::getRequest(), $parameters);
         });
     }
 

@@ -8,6 +8,7 @@ use DateTimeInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteCollection;
+use Illuminate\Contracts\Routing\UrlRoutable;
 
 /**
  * Decorate the UrlGenerator for simplicity
