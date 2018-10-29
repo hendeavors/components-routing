@@ -2,7 +2,6 @@
 
 namespace Endeavors\Components\Routing;
 
-use Illuminate\Foundation\Providers\FoundationServiceProvider as OriginalFoundationServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Support\Facades\URL;
 
-class FoundationServiceProvider extends OriginalFoundationServiceProvider
+class FoundationServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
