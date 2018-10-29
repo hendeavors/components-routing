@@ -31,7 +31,7 @@ class Arr
             return value($default);
         }
 
-        if (is_null($key)) {
+        if (null === $key) {
             return $array;
         }
 
