@@ -8,6 +8,7 @@ use DateTimeInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteCollection;
+use Illuminate\Contracts\Routing\UrlRoutable;
 
 /**
  * Decorate the UrlGenerator for simplicity
@@ -207,13 +208,9 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
      */
     public function hasValidSignature(Request $request)
     {
-        $original = rtrim($request->url().'?'.http_build_query(
-            Arr::except($request->query(), 'signature')
-        ), '?');
-
-        $expires = Arr::get($request->query(), 'expires');
-        $signature = hash_hmac('sha256', $original, call_user_func($this->keyResolver));
-        return  hash_equals($signature, $request->query('signature', '')) && ! ($expires && Carbon::now()->getTimestamp() > $expires);
+        $validator = new SignatureValidator($request);
+        $validator->setKeyResolver($this->keyResolver);
+        return $validator->passes();
     }
     
     /**
@@ -222,12 +219,20 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
     public function hasValidParameterSignature(Request $request, array $parameters = [])
     {
         // we'll bail here as we need at least one
-        if(count($parameters) === 0) return true;
+        if (count($parameters) === 0) {
+            return true;
+        } 
 
-        foreach($parameters as $parameter) {
+        foreach ($parameters as $parameter) {
             // if the request has the parameter or
             // the route has the parameter we check the signature
-            if($request->has($parameter) || strlen($request->route($parameter)) > 0) return $this->hasValidSignature($request);
+            if ($request->has($parameter)) { 
+                return $this->hasValidSignature($request); 
+            }
+
+            if ($this->routeHasParameter($request, $parameter)) {
+                return $this->hasValidSignature($request);
+            }
         }
 
         return true;
@@ -309,6 +314,27 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
             $delay = Carbon::now()->add($delay);
         }
         return $delay;
+    }
+    
+    /**
+     * Determine if the route from a request has a parameter
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param string  $parameter
+     */
+    protected function routeHasParameter(Request $request, $parameter)
+    {
+        $result = false;
+
+        $route = $request->route($parameter);
+
+        if ($route instanceof \Illuminate\Routing\Route && $route->hasParameter($parameter)) {
+            $result = true;
+        } elseif (is_string($route) && strlen($route) > 0) {
+            $result = true;
+        }
+
+        return $result;
     }
 
     /**

@@ -3,7 +3,7 @@
 use Endeavors\Support\VO\Time\Week;
 use Endeavors\Support\VO\Time\Day;
 
-if(! function_exists('signed_route') ) {
+if (!function_exists('signed_route')) {
     /**
      * Create a signed route URL for a named route.
      *
@@ -19,7 +19,7 @@ if(! function_exists('signed_route') ) {
     }
 }
 
-if(! function_exists('temporary_signed_route') ) {
+if (!function_exists('temporary_signed_route')) {
     /**
      * Create a temporary signed route URL for a named route.
      *
@@ -35,7 +35,7 @@ if(! function_exists('temporary_signed_route') ) {
     }
 }
 
-if(! function_exists('one_week_route') ) {
+if (!function_exists('one_week_route')) {
     /**
      * Create a temporary signed route URL for a named route.
      *
@@ -53,7 +53,7 @@ if(! function_exists('one_week_route') ) {
     }
 }
 
-if(! function_exists('one_day_route') ) {
+if (!function_exists('one_day_route')) {
     /**
      * Create a temporary signed route URL for a named route.
      *
