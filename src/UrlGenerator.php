@@ -234,14 +234,6 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
     }
 
     /**
-     * @return bool
-     */
-    public function hasInvalidSignature(Request $request)
-    {
-        return ! $this->hasValidSignature($request);
-    }
-
-    /**
      * Create a signed route URL for a named route.
      *
      * @param  string  $name
