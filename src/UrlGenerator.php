@@ -208,13 +208,9 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
      */
     public function hasValidSignature(Request $request)
     {
-        $original = rtrim($request->url().'?'.http_build_query(
-            Arr::except($request->query(), 'signature')
-        ), '?');
-
-        $expires = Arr::get($request->query(), 'expires');
-        $signature = hash_hmac('sha256', $original, call_user_func($this->keyResolver));
-        return  hash_equals($signature, $request->query('signature', '')) && !($expires && Carbon::now()->getTimestamp() > $expires);
+        $validator = new SignatureValidator($request);
+        $validator->setKeyResolver($this->keyResolver);
+        return $validator->passes();
     }
     
     /**
