@@ -226,20 +226,14 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
             return true;
         } 
 
-        foreach($parameters as $parameter) {
+        foreach ($parameters as $parameter) {
             // if the request has the parameter or
             // the route has the parameter we check the signature
             if ($request->has($parameter)) { 
                 return $this->hasValidSignature($request); 
             }
 
-            $route = $request->route($parameter);
-
-            if($route instanceof \Illuminate\Routing\Route && $route->hasParameter($parameter)) {
-                return $this->hasValidSignature($request);
-            }
-
-            if (is_string($route) && strlen($route) > 0) {
+            if ($this->routeHasParameter($request, $parameter)) {
                 return $this->hasValidSignature($request);
             }
         }
@@ -323,6 +317,27 @@ class UrlGenerator implements UrlGeneratorContract, IEnableRoutes
             $delay = Carbon::now()->add($delay);
         }
         return $delay;
+    }
+    
+    /**
+     * Determine if the route from a request has a parameter
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param string  $parameter
+     */
+    protected function routeHasParameter(Request $request, $parameter)
+    {
+        $result = false;
+
+        $route = $request->route($parameter);
+
+        if ($route instanceof \Illuminate\Routing\Route && $route->hasParameter($parameter)) {
+            $result = true;
+        } elseif (is_string($route) && strlen($route) > 0) {
+            $result = true;
+        }
+
+        return $result;
     }
 
     /**
