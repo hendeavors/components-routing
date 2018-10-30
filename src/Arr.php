@@ -27,7 +27,7 @@ class Arr
      */
     public static function get($array, $key, $default = null)
     {
-        if (! static::accessible($array)) {
+        if (!static::accessible($array)) {
             return value($default);
         }
 
@@ -136,6 +136,6 @@ class Arr
             return [];
         }
 
-        return ! is_array($value) ? [$value] : $value;
+        return !is_array($value) ? [$value] : $value;
     }
 }
