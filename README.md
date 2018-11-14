@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Request;
 public function verifyEmail()
 {
     if (Request::hasInvalidSignature()) {
-        // don't verify the email
+        // DON'T verify the email
     }
 }
 ```
@@ -65,13 +65,25 @@ Validation can be performed only if specific parameters exist.
 ```php
 use Illuminate\Support\Facades\Request;
 
-Route::get('/foo/{id}/{name}', ['as' => 'foo', function ($id) {
-    // The signature will be validated as we care about name as a route parameter
-    return Request::hasValidParameterSignature(['name']) ? 'valid' : 'invalid';
-}]);
+public function verifyEmail()
+{
+    // validate the signature if the email parameter exists
+    if (Request::hasValidParameterSignature(['email'])) {
+        // verify the email
+    }
+}
+```
 
-Route::get('/foo/{id}/{name}', ['as' => 'foo', function ($id) {
-    // The signature will NOT be validated as we only care about email as a route parameter
-    return Request::hasValidParameterSignature(['email']) ? 'valid' : 'invalid';
-}]);
+Again, you may check if the request has an invalid signature.
+
+```php
+use Illuminate\Support\Facades\Request;
+
+public function verifyEmail()
+{
+    // validate the signature if the email parameter exists
+    if (Request::hasInvalidParameterSignature(['email'])) {
+        // DON'T verify the email
+    }
+}
 ```
