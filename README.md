@@ -6,9 +6,7 @@ This library enables the ability to use some of the new routing features only av
 
 Require this package in your composer.json and update composer.
 
-```php
-composer require endeavors/components-routing
-```
+    composer require endeavors/components-routing
 
 # Installation
 
