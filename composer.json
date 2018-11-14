@@ -1,6 +1,7 @@
 {
     "name": "endeavors/components-routing",
-    "description": "Use new Laravel Routing features",
+    "description": "The Endeavors Components Routing package",
+    "keywords": ["laravel", "routing", "url", "urls", "signature", "signed"],
     "type": "library",
     "license": "MIT",
     "require": {
