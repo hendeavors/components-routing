@@ -1,6 +1,6 @@
 {
     "name": "endeavors/components-routing",
-    "description": "Use Laravel Routing Component Independently",
+    "description": "Use new Laravel Routing features",
     "type": "library",
     "license": "MIT",
     "require": {
